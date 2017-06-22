@@ -30,9 +30,14 @@ UserDefinedInBasic.prototype.init = function(fields, read_only_view, hide_user_d
     }
 
     fields.map(function (field) {
-        // Find our fields of interest by their label text
-        var fld_lab = $('.control-label').filter(function() { return $(this).text() === field });
-
+        // Find our fields of interest by their label "for" attribute text
+        
+        var fld_lab = $('.control-label').filter(function() { 
+        	if ($(this).attr('for')) {
+						return ~$(this).attr('for').indexOf(field);
+        	}
+        });
+				console.log(field+":"+fld_lab);
         if (fld_lab.length > 0) {
             if (read_only_view) {
                 var elt_to_move = fld_lab.addClass('col-sm-2').removeClass('col-md-3').parent();
