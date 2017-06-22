@@ -10,7 +10,8 @@ end
     <%= javascript_include_tag "#{AppConfig[:frontend_prefix]}assets/user_defined_in_basic.js" %>
 
     <script>
-     var fields = <%= ASUtils.to_json(AppConfig[:user_defined_in_basic].fetch(controller.controller_name, [])).html_safe %>;
+     var fields = <%= ASUtils.to_json(map_user_defined_to_labels(AppConfig[:user_defined_in_basic].fetch(controller.controller_name, []))).html_safe %>;
+     var field_types = <%= ASUtils.to_json(AppConfig[:user_defined_in_basic].fetch(controller.controller_name, [])).html_safe %>;
      var read_only_view = <%= controller.action_name == 'show' %>;
      var hide_user_defined_section = <%= AppConfig[:user_defined_in_basic]['hide_user_defined_section'] %>;
 
@@ -20,7 +21,7 @@ end
          // defined field subform is in and its buttons have been wired
          // up.
          setTimeout(function () {
-             new UserDefinedInBasic().init(fields, read_only_view, hide_user_defined_section);
+             new UserDefinedInBasic().init(fields, field_types, read_only_view, hide_user_defined_section);
          }, 0);
      }
 
